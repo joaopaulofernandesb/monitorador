@@ -21,7 +21,7 @@ const scrape = async () => {
   return result;
 };
 
-var job = new CronJob('1 * * * *', () => {
+var job = new CronJob('* * * * *', () => {
   console.log('---Iniciando o Monitoramento ---');
 
   scrape().then(value => {
