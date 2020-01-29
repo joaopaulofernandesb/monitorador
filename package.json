@@ -1,6 +1,7 @@
 {
   "name": "Monitorador2",
   "dependencies": {
+    "cors": "^2.8.5",
     "cron": "^1.8.2",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",

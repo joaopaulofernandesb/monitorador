@@ -5,7 +5,7 @@ var cors = require('express-cors');
 
 const app = express();
 
-app.use(cors);
+app.use(cors());
 
 app.get('/status', function(req, res) {
   res.json('ok');
@@ -46,6 +46,7 @@ var job = new CronJob('* * * * *', () => {
     // console.log('produto', prod);
     // console.log('preço', price);
     console.log(value);
+    return value;
   });
 });
 console.log('--- Aquiii ---');
