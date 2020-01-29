@@ -1,5 +1,15 @@
 const puppeteer = require('puppeteer');
 var CronJob = require('cron').CronJob;
+const express = require('express');
+var cors = require('express-cors');
+
+const app = express();
+
+app.use(cors);
+
+app.get('/status', function(req, res) {
+  res.json('ok');
+});
 
 const scrape = async () => {
   const browser = await puppeteer.launch();
@@ -40,3 +50,5 @@ var job = new CronJob('* * * * *', () => {
 });
 console.log('--- Aquiii ---');
 job.start();
+
+app.listen(3000);
