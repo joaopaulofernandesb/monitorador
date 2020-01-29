@@ -25,16 +25,17 @@ var job = new CronJob('1 * * * *', () => {
   console.log('---Iniciando o Monitoramento ---');
 
   scrape().then(value => {
-    const prod = value.map(produto => {
-      return produto.prod;
-    });
+    // const prod = value.map(produto => {
+    //   return produto.prod;
+    // });
 
-    const price = value.map(preco => {
-      return preco.price;
-    });
+    // const price = value.map(preco => {
+    //   return preco.price;
+    // });
 
-    console.log('produto', prod);
-    console.log('preço', price);
+    // console.log('produto', prod);
+    // console.log('preço', price);
+    console.log(value);
   });
 });
 job.start();
