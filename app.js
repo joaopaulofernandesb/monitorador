@@ -38,4 +38,5 @@ var job = new CronJob('* * * * *', () => {
     console.log(value);
   });
 });
+console.log('--- Aquiii ---');
 job.start();
