@@ -2,7 +2,7 @@
 // var CronJob = require('cron').CronJob;
 
 const express = require('express');
-var cors = require('express-cors');
+var cors = require('cors');
 
 const app = express();
 
