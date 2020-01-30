@@ -3,10 +3,14 @@
   "dependencies": {
     "cors": "^2.8.5",
     "cron": "^1.8.2",
+    "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "express": "^4.17.1",
     "express-cors": "0.0.3",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.4.2",
+    "promise": "^8.0.3",
     "puppeteer": "^2.1.0"
   },
   "scripts": {
