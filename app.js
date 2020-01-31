@@ -99,8 +99,9 @@ var job = new CronJob('* * * * *', () => {
             retornoPage.forEach(function(element, index, array) {
               if (retornoDb.indexOf(element) == -1) r3.push(element);
             });
-
             console.log('diferençã', r3);
+
+            return r3;
           }
         });
       }
@@ -137,4 +138,4 @@ var job = new CronJob('* * * * *', () => {
 });
 job.start();
 
-app.listen(process.env.API_PORT || 3000);
+app.listen(process.env.API_PORT || 1337);
