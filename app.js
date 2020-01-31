@@ -78,12 +78,19 @@ var job = new CronJob('* * * * *', () => {
           });
 
           var todasAsDiferencas = apenasNoR1.concat(apenasNoR2);
-          console.log(todasAsDiferencas);
+
           if (!todasAsDiferencas[0]) {
             console.log('Nenhuma Alteração no Momento');
             console.log('---- Fim do Monitoramento ----');
           } else {
-            console.log('Foi encontrado Alterações', todasAsDiferencas);
+            console.log('Foi encontrado Alterações');
+
+            var r3 = [];
+            retornoPage.forEach(function(element, index, array) {
+              if (retornoDb.indexOf(element) == -1) r3.push(element);
+            });
+
+            console.log('diferençã', r3);
           }
         });
       }
