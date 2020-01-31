@@ -56,32 +56,48 @@ var job = new CronJob('* * * * *', () => {
           );
         }
         console.log('Dados Armazenados com sucesso !');
+      } else {
+        db.query('SELECT * from monitorando', function(error, results) {
+          if (error) throw error;
+          const retornoPage = value.map(retornoWeb => {
+            return retornoWeb.info;
+          });
+
+          const retornoDb = results.map(retornoBanco => {
+            return retornoBanco.page;
+          });
+          console.log(retornoPage);
+          console.log(retornoDb);
+
+          if (retornoPage === toString(retornoDb)) console.log('Dados iguais ');
+
+          if (retornoPage !== toString(retornoDb)) {
+            db.query(
+              'SELECT id From monitorando where page != "' + retornoDb + '"',
+              function(error, results) {
+                if (error) throw error;
+
+                console.log(results[0].id);
+
+                // db.query(
+                //   'UPDATE monitorando SET page = "' +
+                //     element +
+                //     '" where id = "' +
+                //     results[0].id +
+                //     '"'
+                // );
+              }
+            );
+
+            console.log('Dados diferentes');
+            retornoPage.forEach(element => {
+              console.log(element);
+            });
+          }
+        });
       }
     });
     // linha com problema
-    for (consultan of value) {
-      db.query(
-        'select * from monitorando where page = "' + consultan.info + '"',
-        function(error, results) {
-          if (error) throw error;
-          if (!results[0]) {
-          }
-
-          if (consultan.if !== results[0].page) {
-            db.query(
-              'UPDATE monitorando SET page = "' +
-                consultan.info +
-                '" where =' +
-                results[0].id,
-              function(error, results) {
-                if (error) throw error;
-                console.log(results);
-              }
-            );
-          }
-        }
-      );
-    }
 
     //   async function main() {
     //     // create reusable transporter object using the default SMTP transport
