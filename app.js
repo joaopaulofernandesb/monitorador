@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 
 app.get('/status', function(req, res) {
-  res.json({ error: false, return: value });
+  res.json({ error: false, return: 'ok' });
 });
 
 var db = mysql.createConnection({
@@ -137,4 +137,4 @@ var job = new CronJob('* * * * *', () => {
 });
 job.start();
 
-app.listen(3001);
+app.listen(process.env.API_PORT || 3000);

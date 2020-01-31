@@ -1,12 +1,12 @@
-const express = require('express');
-var cors = require('express-cors');
+// const express = require('express');
+// var cors = require('express-cors');
 
-const app = express();
+// const app = express();
 
-app.use(cors());
+// app.use(cors());
 
-app.get('/status', function(req, res) {
-  res.json({ error: false, return: value });
-});
+// app.get('/status', function(req, res) {
+//   res.json({ error: false, return: value });
+// });
 
-app.listen(3001);
+// app.listen(3001);
