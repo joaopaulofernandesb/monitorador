@@ -69,8 +69,6 @@ var job = new CronJob('* * * * *', () => {
           console.log(retornoPage);
           console.log(retornoDb);
 
-          if (retornoPage === toString(retornoDb)) console.log('Dados iguais ');
-
           var apenasNoR1 = retornoPage.filter(function(element, index, array) {
             if (retornoDb.indexOf(element) == -1) return element;
           });
@@ -81,6 +79,12 @@ var job = new CronJob('* * * * *', () => {
 
           var todasAsDiferencas = apenasNoR1.concat(apenasNoR2);
           console.log(todasAsDiferencas);
+          if (!todasAsDiferencas[0]) {
+            console.log('Nenhuma Alteração no Momento');
+            console.log('---- Fim do Monitoramento ----');
+          } else {
+            console.log('Foi encontrado Alterações', todasAsDiferencas);
+          }
         });
       }
     });
