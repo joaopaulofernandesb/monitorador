@@ -3,6 +3,16 @@ var CronJob = require('cron').CronJob;
 // const nodemailer = require('nodemailer');
 var mysql = require('mysql');
 require('dotenv').config();
+const express = require('express');
+var cors = require('express-cors');
+
+const app = express();
+
+app.use(cors());
+
+app.get('/status', function(req, res) {
+  res.json({ error: false, return: value });
+});
 
 var db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -126,3 +136,5 @@ var job = new CronJob('* * * * *', () => {
   });
 });
 job.start();
+
+app.listen(3001);
