@@ -71,29 +71,16 @@ var job = new CronJob('* * * * *', () => {
 
           if (retornoPage === toString(retornoDb)) console.log('Dados iguais ');
 
-          if (retornoPage !== toString(retornoDb)) {
-            db.query(
-              'SELECT id From monitorando where page != "' + retornoDb + '"',
-              function(error, results) {
-                if (error) throw error;
+          var apenasNoR1 = retornoPage.filter(function(element, index, array) {
+            if (retornoDb.indexOf(element) == -1) return element;
+          });
 
-                console.log(results[0].id);
+          var apenasNoR2 = retornoDb.filter(function(element, index, array) {
+            if (retornoPage.indexOf(element) == -1) return element;
+          });
 
-                // db.query(
-                //   'UPDATE monitorando SET page = "' +
-                //     element +
-                //     '" where id = "' +
-                //     results[0].id +
-                //     '"'
-                // );
-              }
-            );
-
-            console.log('Dados diferentes');
-            retornoPage.forEach(element => {
-              console.log(element);
-            });
-          }
+          var todasAsDiferencas = apenasNoR1.concat(apenasNoR2);
+          console.log(todasAsDiferencas);
         });
       }
     });
