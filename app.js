@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 var CronJob = require('cron').CronJob;
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 var mysql = require('mysql');
 require('dotenv').config();
 const express = require('express');
@@ -30,9 +30,7 @@ const scrape = async () => {
   });
 
   const page = await browser.newPage();
-  await page.goto(
-    'http://portal.esocial.gov.br/agenda/agenda-1?b_start:int=30'
-  );
+  await page.goto('http://portal.esocial.gov.br/agenda/agenda-1');
   await page.screenshot({ path: 'esocial.png' });
 
   const result = await page.evaluate(() => {
