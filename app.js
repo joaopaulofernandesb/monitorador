@@ -1,11 +1,11 @@
 const puppeteer = require('puppeteer');
 var CronJob = require('cron').CronJob;
-// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 var mysql = require('mysql');
 require('dotenv').config();
 const express = require('express');
 var cors = require('express-cors');
-
+const axios = require('axios');
 const app = express();
 
 app.use(cors());
@@ -80,19 +80,26 @@ var job = new CronJob('* * * * *', () => {
           console.log(retornoPage);
           console.log(retornoDb);
 
-          var apenasNoR1 = retornoPage.filter(function(element, index, array) {
-            if (retornoDb.indexOf(element) == -1) return element;
-          });
+          // var apenasNoR1 = retornoPage.filter(function(element, index, array) {
+          //   if (retornoDb.indexOf(element) == -1) return element;
+          // });
 
           var apenasNoR2 = retornoDb.filter(function(element, index, array) {
             if (retornoPage.indexOf(element) == -1) return element;
           });
 
-          var todasAsDiferencas = apenasNoR1.concat(apenasNoR2);
-
+          var todasAsDiferencas = apenasNoR2;
+          // console.log(todasAsDiferencas);
           if (!todasAsDiferencas[0]) {
             console.log('Nenhuma Alteração no Momento');
             console.log('---- Fim do Monitoramento ----');
+            axios
+              .post(
+                'http://localhost:3000/api/notificar?notificacao=Nenhuma Notificação'
+              )
+              .then(function(response) {
+                console.log(response);
+              });
           } else {
             console.log('Foi encontrado Alterações');
 
@@ -100,9 +107,67 @@ var job = new CronJob('* * * * *', () => {
             retornoPage.forEach(function(element, index, array) {
               if (retornoDb.indexOf(element) == -1) r3.push(element);
             });
-            console.log('diferençã', r3);
+            // console.log('Dif', r3);
 
-            return r3;
+            db.query(
+              'SELECT * FROM monitorando where page ="' +
+                todasAsDiferencas[0] +
+                '"',
+              function(error, results) {
+                if (error) throw error;
+                db.query(
+                  'UPDATE monitorando SET page ="' +
+                    todasAsDiferencas[0] +
+                    '" where id = "' +
+                    results[0].id +
+                    '"',
+                  function(error, results) {
+                    if (error) throw error;
+                    console.log(results);
+                  }
+                );
+              }
+            );
+
+            axios
+              .post('http://localhost:3000/api/notificar?notificacao=' + r3)
+              .then(function(response) {
+                console.log(response);
+              });
+
+            // eslint-disable-next-line no-inner-declarations
+            async function main() {
+              // create reusable transporter object using the default SMTP transport
+              const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                  user: process.env.EMIAL_USER, // generated ethereal user
+                  pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+                },
+              });
+
+              // send mail with defined transport object
+              const info = await transporter.sendMail({
+                from: 'joao.brasil@tecnospeed.com.br', // sender address
+                to: 'joao.brasil@tecnospeed.com.br', // list of receivers
+                subject: 'Alerta ✔', // Subject line
+                text: 'Novos itens alterado', // plain text body
+                html:
+                  '<p><h1>Novos Intens foram Encontrados:</h1></p><br><b>Antes:</b> ' +
+                  todasAsDiferencas[0] +
+                  '  <b>Agora:</b> ' +
+                  r3[0], // html body
+              });
+              console.log('Message sent: %s', info.messageId);
+              console.log(
+                'Preview URL: %s',
+                nodemailer.getTestMessageUrl(info)
+              );
+            }
+
+            main().catch(console.error);
           }
         });
       }
