@@ -111,31 +111,31 @@ var job = new CronJob('* * * * *', () => {
     });
     // linha com problema
 
-    async function main() {
-      // create reusable transporter object using the default SMTP transport
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: process.env.EMIAL_USER, // generated ethereal user
-          pass: process.env.EMAIL_PASSWORD, // generated ethereal password
-        },
-      });
+    // async function main() {
+    //   // create reusable transporter object using the default SMTP transport
+    //   const transporter = nodemailer.createTransport({
+    //     host: 'smtp.gmail.com',
+    //     port: 587,
+    //     secure: false, // true for 465, false for other ports
+    //     auth: {
+    //       user: process.env.EMIAL_USER, // generated ethereal user
+    //       pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    //     },
+    //   });
 
-      // send mail with defined transport object
-      const info = await transporter.sendMail({
-        from: 'joao.brasil@tecnospeed.com.br', // sender address
-        to: 'joao.brasil@tecnospeed.com.br', // list of receivers
-        subject: 'Alerta ✔', // Subject line
-        text: 'Novos itens alterado', // plain text body
-        html: 'teste', // html body
-      });
-      console.log('Message sent: %s', info.messageId);
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    }
+    //   // send mail with defined transport object
+    //   const info = await transporter.sendMail({
+    //     from: 'joao.brasil@tecnospeed.com.br', // sender address
+    //     to: 'joao.brasil@tecnospeed.com.br', // list of receivers
+    //     subject: 'Alerta ✔', // Subject line
+    //     text: 'Novos itens alterado', // plain text body
+    //     html: 'teste', // html body
+    //   });
+    //   console.log('Message sent: %s', info.messageId);
+    //   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    // }
 
-    main().catch(console.error);
+    // main().catch(console.error);
   });
 });
 job.start();
