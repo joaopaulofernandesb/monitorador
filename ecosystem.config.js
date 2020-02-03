@@ -1,15 +1,9 @@
 module.exports = {
   apps: [
     {
-      name: 'API',
+      name: 'Monitorador_de_alteracao',
       script: 'app.js',
-
-      // Options reference: https://pm2.keymetrics.io/docs/usage/application-declaration/
-      args: 'one two',
-      instances: 1,
-      autorestart: true,
-      watch: false,
-      max_memory_restart: '1G',
+      instances: 'max',
       env: {
         NODE_ENV: 'development',
       },
