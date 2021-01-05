@@ -1,7 +1,7 @@
 {
   "name": "Monitorador2",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
     "dotenv": "^8.2.0",
